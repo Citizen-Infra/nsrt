@@ -2,7 +2,7 @@
 
 Tools crafted by, with, and for Novi Sad residents — made to help us connect, care for, and trust each other.
 
-Inspired by the [Relational Tech Project](https://www.relationaltechproject.org/).
+Inspired by the [Relational Tech Project](https://www.relationaltechproject.org/) and their [Remix Library](https://www.relationaltechproject.org/remix) of remixable community tools.
 
 ## What is relational technology?
 
