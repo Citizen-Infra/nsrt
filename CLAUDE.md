@@ -19,6 +19,6 @@ When building tools for this project, follow these principles:
 
 ## Repository
 
-- **GitHub:** github.com/zhiganov/nsrt
+- **GitHub:** github.com/Citizen-Infra/nsrt
 - **License:** MIT
 - **Code of Conduct:** Contributor Covenant v2.1
