@@ -4,6 +4,19 @@ Tools crafted by, with, and for Novi Sad residents — made to help us connect, 
 
 Inspired by the [Relational Tech Project](https://www.relationaltechproject.org/) and their [Remix Library](https://www.relationaltechproject.org/remix) of remixable community tools.
 
+## 🏘️ First Tool: Dear Neighbors
+
+**[Dear Neighbors](https://github.com/Citizen-Infra/dear-neighbors)** is the first NSRT tool available for use — a Chrome extension that replaces your new tab page with a neighborhood dashboard. Community-curated local news links and participation opportunities, scoped to your city and neighborhood.
+
+**[Download v0.1.0](https://github.com/Citizen-Infra/dear-neighbors/releases/tag/v0.1.0)** (macOS DMG or Windows zip)
+
+Features:
+- Pick your country, city, and neighborhood (111 countries, 340+ cities)
+- Browse and share community links, vote on what matters
+- See local participation opportunities (deliberation sessions, conversations, meetings)
+- Filter by topics (urban planning, transport, culture, environment, etc.)
+- Dark mode, works in Chrome and Brave
+
 ## What is relational technology?
 
 Relational technology refers to digital tools that strengthen local connections and community bonds. Rather than one-size-fits-all platforms, these are tools built with deep awareness of the specific challenges and opportunities in our community.
