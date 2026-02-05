@@ -109,14 +109,20 @@
             color: white;
         }
 
-        /* Content visibility - default: EN visible, SR hidden */
-        [data-lang="sr"] { display: none !important; }
+        /* Content visibility - default: EN visible, SR/RU hidden */
+        [data-lang="sr"], [data-lang="ru"] { display: none !important; }
 
-        /* SR mode: EN hidden, SR visible */
-        body.sr [data-lang="en"] { display: none !important; }
+        /* SR mode: EN/RU hidden, SR visible */
+        body.sr [data-lang="en"], body.sr [data-lang="ru"] { display: none !important; }
         body.sr [data-lang="sr"] { display: block !important; }
         body.sr span[data-lang="sr"] { display: inline !important; }
         body.sr .principles li[data-lang="sr"] { display: flex !important; }
+
+        /* RU mode: EN/SR hidden, RU visible */
+        body.ru [data-lang="en"], body.ru [data-lang="sr"] { display: none !important; }
+        body.ru [data-lang="ru"] { display: block !important; }
+        body.ru span[data-lang="ru"] { display: inline !important; }
+        body.ru .principles li[data-lang="ru"] { display: flex !important; }
 
         /* Header bar */
         .header {
@@ -616,6 +622,7 @@
     <div class="lang-toggle">
         <button class="lang-btn active" onclick="setLang('en')">EN</button>
         <button class="lang-btn" onclick="setLang('sr')">SR</button>
+        <button class="lang-btn" onclick="setLang('ru')">RU</button>
     </div>
 
     <!-- Header -->
@@ -638,6 +645,7 @@
 
         <h1 data-lang="en">We can build <em>what we need</em></h1>
         <h1 data-lang="sr">Možemo da napravimo <em>ono što nam treba</em></h1>
+        <h1 data-lang="ru">Мы можем создать <em>то, что нам нужно</em></h1>
 
         <p class="hero-text" data-lang="en">
             No one is coming to save our neighborhoods. The good news: we can build the tools ourselves. NSRT is a community of Novi Sad residents crafting relational technology — small tools that help us connect, care for, and trust each other.
@@ -645,10 +653,14 @@
         <p class="hero-text" data-lang="sr">
             Niko neće doći da spasi naša komšiluka. Dobra vest: možemo sami da napravimo alate. NSRT je zajednica stanovnika Novog Sada koji prave relacione tehnologije — male alate koji nam pomažu da se povežemo i brinemo jedni o drugima.
         </p>
+        <p class="hero-text" data-lang="ru">
+            Никто не придёт спасать наши районы. Хорошая новость: мы можем создать инструменты сами. NSRT — это сообщество жителей Нови-Сада, создающих технологии для связи — небольшие инструменты, которые помогают нам общаться и заботиться друг о друге.
+        </p>
 
         <a href="#tools" class="hero-cta">
             <span data-lang="en">See our tools</span>
             <span data-lang="sr">Pogledaj alate</span>
+            <span data-lang="ru">Наши инструменты</span>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M12 5v14M5 12l7 7 7-7"/>
             </svg>
@@ -671,6 +683,7 @@
             <span class="section-num">01</span>
             <h2 class="section-title" data-lang="en">Our First MVPs</h2>
             <h2 class="section-title" data-lang="sr">Naši prvi MVP-ovi</h2>
+            <h2 class="section-title" data-lang="ru">Наши первые MVP</h2>
         </div>
 
         <div class="tools-grid">
@@ -679,11 +692,14 @@
                 <h3>Dear Neighbors</h3>
                 <div class="tool-tagline" data-lang="en">// neighborhood dashboard</div>
                 <div class="tool-tagline" data-lang="sr">// komšijski dashboard</div>
+                <div class="tool-tagline" data-lang="ru">// районный дашборд</div>
                 <p data-lang="en">Turn your new tab into a local news feed. Community-curated links, participation opportunities, and events — scoped to your neighborhood. 111 countries, 340+ cities.</p>
                 <p data-lang="sr">Pretvorite novi tab u lokalne vesti. Linkovi iz zajednice, prilike za učešće i događaji — filtrirano za vaš komšiluk. 111 zemalja, 340+ gradova.</p>
+                <p data-lang="ru">Превратите новую вкладку в ленту местных новостей. Ссылки от сообщества, возможности участия и события — для вашего района. 111 стран, 340+ городов.</p>
                 <a href="https://github.com/Citizen-Infra/dear-neighbors/releases/latest" class="tool-link" target="_blank">
                     <span data-lang="en">Download</span>
                     <span data-lang="sr">Preuzmi</span>
+                    <span data-lang="ru">Скачать</span>
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/>
                     </svg>
@@ -695,11 +711,14 @@
                 <h3>Community Admin</h3>
                 <div class="tool-tagline" data-lang="en">// organizer dashboard</div>
                 <div class="tool-tagline" data-lang="sr">// dashboard za organizatore</div>
+                <div class="tool-tagline" data-lang="ru">// панель организатора</div>
                 <p data-lang="en">A shared admin platform for community organizers. Manage participation opportunities, curate local news, coordinate across neighborhoods.</p>
                 <p data-lang="sr">Zajednička admin platforma za organizatore zajednice. Upravljanje prilikama za učešće, kuriranje lokalnih vesti, koordinacija između komšiluka.</p>
+                <p data-lang="ru">Общая админ-платформа для организаторов сообществ. Управление возможностями участия, курирование местных новостей, координация между районами.</p>
                 <a href="https://github.com/Citizen-Infra" class="tool-link" target="_blank">
                     <span data-lang="en">Follow progress</span>
                     <span data-lang="sr">Prati razvoj</span>
+                    <span data-lang="ru">Следить</span>
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/>
                     </svg>
@@ -714,6 +733,7 @@
             <span class="section-num">02</span>
             <h2 class="section-title" data-lang="en">What We're Exploring</h2>
             <h2 class="section-title" data-lang="sr">Šta istražujemo</h2>
+            <h2 class="section-title" data-lang="ru">Что мы исследуем</h2>
         </div>
 
         <p class="ideas-intro" data-lang="en">
@@ -722,94 +742,121 @@
         <p class="ideas-intro" data-lang="sr">
             Ovo su alati o kojima razmišljamo — ili koje bismo voleli da neko napravi. Inspirisani <a href="https://www.relationaltechproject.org/remix" target="_blank" style="color: var(--steel);">RTP Remix bibliotekom</a>, prilagođeni za Novi Sad. <a href="#suggest" style="color: var(--amber);">Predloži svoju ideju →</a>
         </p>
+        <p class="ideas-intro" data-lang="ru">
+            Это инструменты, которые мы думаем создать — или хотели бы, чтобы кто-то создал. Вдохновлены <a href="https://www.relationaltechproject.org/remix" target="_blank" style="color: var(--steel);">библиотекой RTP Remix</a>, адаптированы для Нови-Сада. <a href="#suggest" style="color: var(--amber);">Предложить идею →</a>
+        </p>
 
         <h3 class="ideas-category" data-lang="en">Neighbor Stories & Connection</h3>
         <h3 class="ideas-category" data-lang="sr">Priče i povezivanje komšija</h3>
+        <h3 class="ideas-category" data-lang="ru">Истории и связи соседей</h3>
 
         <div class="ideas-grid">
             <div class="idea-card">
                 <h4 data-lang="en">Neighbor Stories</h4>
                 <h4 data-lang="sr">Priče Komšija</h4>
+                <h4 data-lang="ru">Истории соседей</h4>
                 <p data-lang="en">A platform for collecting personal stories from residents. Who lives on your street? What's their story? Connection through narrative.</p>
                 <p data-lang="sr">Platforma za prikupljanje ličnih priča stanara. Ko živi u vašoj ulici? Koja je njihova priča? Povezivanje kroz narativ.</p>
+                <p data-lang="ru">Платформа для сбора личных историй жителей. Кто живёт на вашей улице? Какова их история? Связь через повествование.</p>
             </div>
 
             <div class="idea-card">
                 <h4 data-lang="en">Neighborhood Hub</h4>
                 <h4 data-lang="sr">Komšiluk Hub</h4>
+                <h4 data-lang="ru">Районный хаб</h4>
                 <p data-lang="en">A hyperlocal hub for your block or building. Asks, offers, notices, care coordination — scoped to your immediate neighbors.</p>
                 <p data-lang="sr">Hiperlokalni hub za vaš blok ili zgradu. Molbe, ponude, obaveštenja, koordinacija brige — samo za najbliže komšije.</p>
+                <p data-lang="ru">Гиперлокальный хаб для вашего дома или квартала. Просьбы, предложения, объявления, координация помощи — только для ближайших соседей.</p>
             </div>
 
             <div class="idea-card">
                 <h4 data-lang="en">Courtyard Sessions</h4>
                 <h4 data-lang="sr">Dvorišna Druženja</h4>
+                <h4 data-lang="ru">Дворовые встречи</h4>
                 <p data-lang="en">Organize casual neighborhood gatherings. Courtyard coffees, block parties, shared meals. Open invitations, low barrier.</p>
                 <p data-lang="sr">Organizujte neformalna druženja. Kafe u dvorištu, blok žurke, zajednički obroci. Otvoreni pozivi, bez komplikacija.</p>
+                <p data-lang="ru">Организуйте неформальные соседские встречи. Кофе во дворе, праздники квартала, совместные обеды. Открытые приглашения, без сложностей.</p>
             </div>
         </div>
 
         <h3 class="ideas-category" data-lang="en">Sharing & Mutual Aid</h3>
         <h3 class="ideas-category" data-lang="sr">Deljenje i uzajamna pomoć</h3>
+        <h3 class="ideas-category" data-lang="ru">Обмен и взаимопомощь</h3>
 
         <div class="ideas-grid">
             <div class="idea-card">
                 <h4 data-lang="en">Borrow Network</h4>
                 <h4 data-lang="sr">Pozajmi</h4>
+                <h4 data-lang="ru">Сеть обмена</h4>
                 <p data-lang="en">A catalog of things neighbors will lend. Tools, books, camping gear, kitchen equipment. Track what's available and who has it.</p>
                 <p data-lang="sr">Katalog stvari koje komšije pozajmljuju. Alati, knjige, oprema za kampovanje, kuhinjska oprema. Pratite šta je dostupno.</p>
+                <p data-lang="ru">Каталог вещей, которые соседи готовы одолжить. Инструменты, книги, туристическое снаряжение, кухонная техника. Отслеживайте, что доступно.</p>
             </div>
 
             <div class="idea-card">
                 <h4 data-lang="en">Skill Exchange</h4>
                 <h4 data-lang="sr">Razmena Veština</h4>
+                <h4 data-lang="ru">Обмен навыками</h4>
                 <p data-lang="en">Time and skill exchange. What can you teach? What do you want to learn? Guitar for tax help, Serbian for English. No currency.</p>
                 <p data-lang="sr">Razmena vremena i veština. Šta možete da naučite druge? Šta želite da naučite? Gitara za pomoć s porezom. Bez novca.</p>
+                <p data-lang="ru">Обмен временем и навыками. Чему вы можете научить? Что хотите узнать? Гитара за помощь с налогами, сербский за английский. Без денег.</p>
             </div>
 
             <div class="idea-card">
                 <h4 data-lang="en">Solidarity Network</h4>
                 <h4 data-lang="sr">Mreža Solidarnosti</h4>
+                <h4 data-lang="ru">Сеть солидарности</h4>
                 <p data-lang="en">Coordinate mutual aid during heat waves, cold snaps, or Danube floods. Who needs help? Who can provide it? SMS-based, no app required.</p>
                 <p data-lang="sr">Koordinacija uzajamne pomoći tokom toplotnih talasa, hladnoća ili poplava Dunava. Ko treba pomoć? Ko može da pomogne? Preko SMS-a, bez aplikacije.</p>
+                <p data-lang="ru">Координация взаимопомощи во время жары, холодов или наводнений Дуная. Кому нужна помощь? Кто может помочь? Через SMS, без приложения.</p>
             </div>
         </div>
 
         <h3 class="ideas-category" data-lang="en">Local Culture & Economy</h3>
         <h3 class="ideas-category" data-lang="sr">Lokalna kultura i ekonomija</h3>
+        <h3 class="ideas-category" data-lang="ru">Местная культура и экономика</h3>
 
         <div class="ideas-grid">
             <div class="idea-card">
                 <h4 data-lang="en">Culture Radar</h4>
                 <h4 data-lang="sr">Kulturni Radar</h4>
+                <h4 data-lang="ru">Культурный радар</h4>
                 <p data-lang="en">Community calendar of small cultural events. Gallery openings, readings, jam sessions. Neighbors post their own, not scraped from Instagram.</p>
                 <p data-lang="sr">Kalendar malih kulturnih događaja. Otvaranja galerija, čitanja, jam sessions. Komšije objavljuju svoje, ne skrejpovano s Instagrama.</p>
+                <p data-lang="ru">Календарь небольших культурных событий от сообщества. Открытия галерей, чтения, джем-сейшены. Соседи публикуют сами, не парсинг из Instagram.</p>
             </div>
 
             <div class="idea-card">
                 <h4 data-lang="en">Local First</h4>
                 <h4 data-lang="sr">Lokalno Prvo</h4>
+                <h4 data-lang="ru">Сначала местное</h4>
                 <p data-lang="en">Community-curated directory of local businesses, craftspeople, and services. Neighborhood recommendations with personal context, not anonymous reviews.</p>
                 <p data-lang="sr">Direktorijum lokalnih biznisa, zanatlija i usluga koji kurira zajednica. Preporuke komšija sa ličnim kontekstom, ne anonimne recenzije.</p>
+                <p data-lang="ru">Каталог местных бизнесов, ремесленников и услуг от сообщества. Рекомендации соседей с личным контекстом, не анонимные отзывы.</p>
             </div>
         </div>
 
         <h3 class="ideas-category" data-lang="en">Infrastructure</h3>
         <h3 class="ideas-category" data-lang="sr">Infrastruktura</h3>
+        <h3 class="ideas-category" data-lang="ru">Инфраструктура</h3>
 
         <div class="ideas-grid">
             <div class="idea-card">
                 <h4 data-lang="en">Neighborhood API</h4>
                 <h4 data-lang="sr">Komšiluk API</h4>
+                <h4 data-lang="ru">API района</h4>
                 <p data-lang="en">A shared, open feed format for local events, assets, needs, and notices. Different tools publish and consume from it, keeping the ecosystem interoperable.</p>
                 <p data-lang="sr">Zajednički, otvoreni format za lokalne događaje, resurse, potrebe i obaveštenja. Različiti alati objavljuju i čitaju iz njega, održavajući ekosistem interoperabilnim.</p>
+                <p data-lang="ru">Общий открытый формат для местных событий, ресурсов, потребностей и объявлений. Разные инструменты публикуют и читают из него, сохраняя совместимость экосистемы.</p>
             </div>
 
             <div class="idea-card">
                 <h4 data-lang="en">Community Apps Dashboard</h4>
                 <h4 data-lang="sr">Dashboard Aplikacija Zajednice</h4>
+                <h4 data-lang="ru">Панель приложений</h4>
                 <p data-lang="en">A directory of all NSRT tools and community-built digital resources. The front door for residents who want to find or build tools.</p>
                 <p data-lang="sr">Direktorijum svih NSRT alata i digitalnih resursa koje je napravila zajednica. Ulazna tačka za stanovnike koji žele da pronađu ili naprave alate.</p>
+                <p data-lang="ru">Каталог всех инструментов NSRT и цифровых ресурсов сообщества. Входная точка для жителей, которые хотят найти или создать инструменты.</p>
             </div>
         </div>
     </section>
@@ -820,6 +867,7 @@
             <span class="section-num">03</span>
             <h2 class="section-title" data-lang="en">Suggest an Idea</h2>
             <h2 class="section-title" data-lang="sr">Predloži ideju</h2>
+            <h2 class="section-title" data-lang="ru">Предложить идею</h2>
         </div>
 
         <p class="ideas-intro" data-lang="en">
@@ -828,10 +876,14 @@
         <p class="ideas-intro" data-lang="sr">
             Imate ideju za alat koji bi pomogao komšijama u Novom Sadu? Voleli bismo da je čujemo. Pošaljite svoju ideju i dodaćemo je na našu listu za diskusiju u zajednici i potencijalno pravljenje.
         </p>
+        <p class="ideas-intro" data-lang="ru">
+            Есть идея инструмента, который поможет соседям в Нови-Саде? Мы будем рады её услышать. Отправьте идею, и мы добавим её в список для обсуждения сообществом и возможной реализации.
+        </p>
 
         <a href="https://citizen-collective.notion.site/2fe6b503b70d80399027e5dc4f68869e" class="hero-cta" target="_blank" style="margin-top: 20px;">
             <span data-lang="en">Submit your idea</span>
             <span data-lang="sr">Pošalji ideju</span>
+            <span data-lang="ru">Отправить идею</span>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px;">
                 <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/>
             </svg>
@@ -843,6 +895,7 @@
         <div class="manifesto-inner">
             <h2 data-lang="en">Why we build this way</h2>
             <h2 data-lang="sr">Zašto gradimo ovako</h2>
+            <h2 data-lang="ru">Почему мы строим так</h2>
 
             <p class="manifesto-text" data-lang="en">
                 We've been told a perfect app would fix our neighborhoods. That hasn't worked. The tools we need won't come from Silicon Valley or Belgrade startups — they'll come from us, the people who live here and understand what we actually need.
@@ -850,16 +903,23 @@
             <p class="manifesto-text" data-lang="sr">
                 Govorili su nam da će savršena aplikacija popraviti naša komšiluka. Nije uspelo. Alati koji su nam potrebni neće doći iz Silicijumske doline ili beogradskih startapa — doći će od nas, ljudi koji ovde žive i razumeju šta nam zaista treba.
             </p>
+            <p class="manifesto-text" data-lang="ru">
+                Нам говорили, что идеальное приложение исправит наши районы. Это не сработало. Инструменты, которые нам нужны, не придут из Кремниевой долины или белградских стартапов — они придут от нас, людей, которые живут здесь и понимают, что нам действительно нужно.
+            </p>
 
             <ul class="principles">
                 <li data-lang="en"><strong>Neighbor-to-neighbor.</strong> Strengthening bonds between residents, not reporting tools for authorities.</li>
                 <li data-lang="sr"><strong>Od komšije do komšije.</strong> Jačanje veza između stanara, ne alati za prijave vlastima.</li>
+                <li data-lang="ru"><strong>От соседа к соседу.</strong> Укрепление связей между жителями, а не инструменты для доносов властям.</li>
                 <li data-lang="en"><strong>Village-scale.</strong> Tools scoped to a block, building, or mesna zajednica — not all of Novi Sad at once.</li>
                 <li data-lang="sr"><strong>Razmera sela.</strong> Alati ograničeni na blok, zgradu ili mesnu zajednicu — ne ceo Novi Sad odjednom.</li>
+                <li data-lang="ru"><strong>Масштаб деревни.</strong> Инструменты для дома, квартала или района — не для всего Нови-Сада сразу.</li>
                 <li data-lang="en"><strong>Small tools, not platforms.</strong> Interoperable pieces that work together, not one system to rule them all.</li>
                 <li data-lang="sr"><strong>Mali alati, ne platforme.</strong> Interoperabilni delovi koji rade zajedno, ne jedan sistem koji vlada svima.</li>
+                <li data-lang="ru"><strong>Маленькие инструменты, не платформы.</strong> Совместимые части, которые работают вместе, а не одна система, управляющая всем.</li>
                 <li data-lang="en"><strong>Remix, don't reinvent.</strong> Adapt existing patterns to our context rather than starting from zero.</li>
                 <li data-lang="sr"><strong>Remiksuj, ne izmišljaj.</strong> Prilagodi postojeće šablone našem kontekstu umesto da krećeš od nule.</li>
+                <li data-lang="ru"><strong>Ремикс, не изобретение.</strong> Адаптируй существующие паттерны к нашему контексту вместо того, чтобы начинать с нуля.</li>
             </ul>
         </div>
     </section>
@@ -872,6 +932,9 @@
             </p>
             <p class="footer-quote" data-lang="sr">
                 „Ako želite da naučite ljude novom načinu razmišljanja, nemojte se truditi da ih podučavate. Umesto toga, dajte im alat čija će ih upotreba navesti na nove načine razmišljanja."
+            </p>
+            <p class="footer-quote" data-lang="ru">
+                «Если вы хотите научить людей новому образу мышления, не пытайтесь их учить. Вместо этого дайте им инструмент, использование которого приведёт к новым способам мышления.»
             </p>
             <p class="footer-author">— Buckminster Fuller</p>
 
@@ -894,12 +957,14 @@
 
             <p class="footer-tagline" data-lang="en">Tools that teach collective action through use</p>
             <p class="footer-tagline" data-lang="sr">Alati koji nas uče zajedničkom delovanju</p>
+            <p class="footer-tagline" data-lang="ru">Инструменты, которые учат коллективным действиям через использование</p>
         </div>
     </footer>
 
     <script>
         function setLang(lang) {
-            document.body.classList.toggle('sr', lang === 'sr');
+            document.body.classList.remove('sr', 'ru');
+            if (lang !== 'en') document.body.classList.add(lang);
             document.querySelectorAll('.lang-btn').forEach(btn => {
                 btn.classList.toggle('active', btn.textContent === lang.toUpperCase());
             });
@@ -909,7 +974,8 @@
 
         // Check saved preference or browser language
         const savedLang = localStorage.getItem('nsrt-lang');
-        const browserLang = navigator.language.startsWith('sr') ? 'sr' : 'en';
+        const browserLang = navigator.language.startsWith('sr') ? 'sr' :
+                           navigator.language.startsWith('ru') ? 'ru' : 'en';
         setLang(savedLang || browserLang);
     </script>
 </body>
