@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NSRT — Novi Sad Relational Tech</title>
+    <meta name="description" content="Community tools crafted by, with, and for Novi Sad residents. Alati koje pravimo zajedno, za naše komšije.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,400&family=Nunito:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --cream: #FDF8F3;
+            --terracotta: #C45D3A;
+            --terracotta-dark: #A84E30;
+            --olive: #5B7C5A;
+            --olive-light: #7A9B79;
+            --brown: #3D2E2A;
+            --brown-light: #5C4A44;
+            --sage: #D4DFD3;
+            --sage-dark: #B8C9B6;
+
+            --font-display: 'Fraunces', Georgia, serif;
+            --font-body: 'Nunito', -apple-system, sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--cream);
+            color: var(--brown);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        /* Paper texture overlay */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+            opacity: 0.03;
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        /* Language toggle */
+        .lang-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 100;
+            display: flex;
+            background: white;
+            border-radius: 30px;
+            padding: 4px;
+            box-shadow: 0 2px 10px rgba(61, 46, 42, 0.1);
+            border: 1px solid var(--sage);
+        }
+
+        .lang-btn {
+            font-family: var(--font-body);
+            font-size: 14px;
+            font-weight: 500;
+            padding: 8px 16px;
+            border: none;
+            background: transparent;
+            color: var(--brown-light);
+            cursor: pointer;
+            border-radius: 26px;
+            transition: all 0.3s ease;
+        }
+
+        .lang-btn.active {
+            background: var(--terracotta);
+            color: white;
+        }
+
+        .lang-btn:hover:not(.active) {
+            color: var(--terracotta);
+        }
+
+        /* Content visibility */
+        [data-lang="sr"] { display: none; }
+        body.sr [data-lang="en"] { display: none; }
+        body.sr [data-lang="sr"] { display: block; }
+
+        /* Hero section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 60px 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Decorative border - hand-drawn style */
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            right: 20px;
+            bottom: 20px;
+            border: 2px solid var(--sage-dark);
+            border-radius: 20px;
+            pointer-events: none;
+        }
+
+        /* Corner decorations */
+        .corner-decor {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            opacity: 0.6;
+        }
+
+        .corner-decor svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .corner-decor.top-left { top: 30px; left: 30px; }
+        .corner-decor.top-right { top: 30px; right: 30px; transform: rotate(90deg); }
+        .corner-decor.bottom-left { bottom: 30px; left: 30px; transform: rotate(-90deg); }
+        .corner-decor.bottom-right { bottom: 30px; right: 30px; transform: rotate(180deg); }
+
+        .hero-content {
+            max-width: 700px;
+            animation: fadeUp 0.8s ease-out;
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .logo {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 30px;
+        }
+
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+        }
+
+        .logo-text {
+            font-family: var(--font-display);
+            font-size: 28px;
+            font-weight: 600;
+            color: var(--terracotta);
+            letter-spacing: -0.5px;
+        }
+
+        .hero h1 {
+            font-family: var(--font-display);
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-weight: 400;
+            line-height: 1.2;
+            margin-bottom: 24px;
+            color: var(--brown);
+        }
+
+        .hero h1 em {
+            font-style: italic;
+            color: var(--terracotta);
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--brown-light);
+            max-width: 550px;
+            margin: 0 auto 40px;
+        }
+
+        .scroll-hint {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            color: var(--olive);
+            font-size: 14px;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(8px); }
+        }
+
+        .scroll-hint svg {
+            width: 24px;
+            height: 24px;
+        }
+
+        /* Tools section */
+        .tools {
+            padding: 80px 20px 100px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-header h2 {
+            font-family: var(--font-display);
+            font-size: 2rem;
+            font-weight: 400;
+            color: var(--brown);
+            margin-bottom: 12px;
+        }
+
+        .section-header p {
+            color: var(--brown-light);
+            font-size: 1.1rem;
+        }
+
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .tool-card {
+            background: white;
+            border-radius: 16px;
+            padding: 32px;
+            border: 2px solid var(--sage);
+            position: relative;
+            transition: all 0.3s ease;
+            overflow: hidden;
+        }
+
+        .tool-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--olive);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .tool-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(61, 46, 42, 0.12);
+            border-color: var(--olive);
+        }
+
+        .tool-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .tool-card:nth-child(2)::before {
+            background: var(--terracotta);
+        }
+
+        .tool-card:nth-child(2):hover {
+            border-color: var(--terracotta);
+        }
+
+        .tool-icon {
+            width: 56px;
+            height: 56px;
+            margin-bottom: 20px;
+        }
+
+        .tool-card h3 {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--brown);
+            margin-bottom: 12px;
+        }
+
+        .tool-card .tagline {
+            font-size: 0.95rem;
+            color: var(--olive);
+            font-weight: 500;
+            margin-bottom: 16px;
+        }
+
+        .tool-card p {
+            color: var(--brown-light);
+            margin-bottom: 24px;
+            line-height: 1.7;
+        }
+
+        .tool-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-family: var(--font-body);
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--terracotta);
+            text-decoration: none;
+            padding: 10px 20px;
+            border: 2px solid var(--terracotta);
+            border-radius: 30px;
+            transition: all 0.3s ease;
+        }
+
+        .tool-link:hover {
+            background: var(--terracotta);
+            color: white;
+        }
+
+        .tool-link svg {
+            width: 16px;
+            height: 16px;
+            transition: transform 0.3s ease;
+        }
+
+        .tool-link:hover svg {
+            transform: translateX(4px);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--sage);
+            padding: 50px 20px;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        footer h3 {
+            font-family: var(--font-display);
+            font-size: 1.4rem;
+            font-weight: 400;
+            color: var(--brown);
+            margin-bottom: 16px;
+        }
+
+        footer p {
+            color: var(--brown-light);
+            margin-bottom: 24px;
+            line-height: 1.7;
+        }
+
+        .footer-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--olive);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .footer-link:hover {
+            color: var(--terracotta);
+        }
+
+        .footer-link svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        .footer-divider {
+            width: 60px;
+            height: 2px;
+            background: var(--olive);
+            margin: 30px auto;
+            opacity: 0.5;
+        }
+
+        .footer-tagline {
+            font-family: var(--font-display);
+            font-style: italic;
+            color: var(--brown-light);
+            font-size: 0.95rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .hero::before {
+                top: 10px;
+                left: 10px;
+                right: 10px;
+                bottom: 10px;
+            }
+
+            .corner-decor {
+                width: 40px;
+                height: 40px;
+            }
+
+            .corner-decor.top-left { top: 15px; left: 15px; }
+            .corner-decor.top-right { top: 15px; right: 15px; }
+            .corner-decor.bottom-left { bottom: 15px; left: 15px; }
+            .corner-decor.bottom-right { bottom: 15px; right: 15px; }
+
+            .lang-toggle {
+                top: 10px;
+                right: 10px;
+            }
+
+            .lang-btn {
+                padding: 6px 12px;
+                font-size: 13px;
+            }
+
+            .tools {
+                padding: 60px 16px 80px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Language Toggle -->
+    <div class="lang-toggle">
+        <button class="lang-btn active" onclick="setLang('en')">EN</button>
+        <button class="lang-btn" onclick="setLang('sr')">SR</button>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <!-- Corner decorations - hand-drawn leaf/branch motif -->
+        <div class="corner-decor top-left">
+            <svg viewBox="0 0 60 60" fill="none" stroke="#5B7C5A" stroke-width="1.5" stroke-linecap="round">
+                <path d="M5 55 Q5 5 55 5" />
+                <path d="M15 45 Q20 30 35 25" />
+                <path d="M25 40 Q28 32 38 28" />
+                <circle cx="12" cy="48" r="3" fill="#5B7C5A" opacity="0.3" />
+                <circle cx="20" cy="38" r="2" fill="#5B7C5A" opacity="0.3" />
+            </svg>
+        </div>
+        <div class="corner-decor top-right">
+            <svg viewBox="0 0 60 60" fill="none" stroke="#5B7C5A" stroke-width="1.5" stroke-linecap="round">
+                <path d="M5 55 Q5 5 55 5" />
+                <path d="M15 45 Q20 30 35 25" />
+                <path d="M25 40 Q28 32 38 28" />
+                <circle cx="12" cy="48" r="3" fill="#5B7C5A" opacity="0.3" />
+                <circle cx="20" cy="38" r="2" fill="#5B7C5A" opacity="0.3" />
+            </svg>
+        </div>
+        <div class="corner-decor bottom-left">
+            <svg viewBox="0 0 60 60" fill="none" stroke="#5B7C5A" stroke-width="1.5" stroke-linecap="round">
+                <path d="M5 55 Q5 5 55 5" />
+                <path d="M15 45 Q20 30 35 25" />
+                <path d="M25 40 Q28 32 38 28" />
+                <circle cx="12" cy="48" r="3" fill="#5B7C5A" opacity="0.3" />
+                <circle cx="20" cy="38" r="2" fill="#5B7C5A" opacity="0.3" />
+            </svg>
+        </div>
+        <div class="corner-decor bottom-right">
+            <svg viewBox="0 0 60 60" fill="none" stroke="#5B7C5A" stroke-width="1.5" stroke-linecap="round">
+                <path d="M5 55 Q5 5 55 5" />
+                <path d="M15 45 Q20 30 35 25" />
+                <path d="M25 40 Q28 32 38 28" />
+                <circle cx="12" cy="48" r="3" fill="#5B7C5A" opacity="0.3" />
+                <circle cx="20" cy="38" r="2" fill="#5B7C5A" opacity="0.3" />
+            </svg>
+        </div>
+
+        <div class="hero-content">
+            <div class="logo">
+                <!-- Hand-drawn houses icon -->
+                <svg class="logo-icon" viewBox="0 0 50 50" fill="none">
+                    <path d="M8 28 L8 42 L22 42 L22 28 L15 20 Z" stroke="#C45D3A" stroke-width="2" fill="#FDF8F3"/>
+                    <path d="M28 24 L28 42 L42 42 L42 24 L35 16 Z" stroke="#5B7C5A" stroke-width="2" fill="#FDF8F3"/>
+                    <path d="M12 32 L12 36 L18 36 L18 32 Z" stroke="#C45D3A" stroke-width="1.5" fill="none"/>
+                    <path d="M32 28 L32 34 L38 34 L38 28 Z" stroke="#5B7C5A" stroke-width="1.5" fill="none"/>
+                    <circle cx="15" cy="38" r="1.5" fill="#C45D3A"/>
+                    <circle cx="35" cy="38" r="1.5" fill="#5B7C5A"/>
+                </svg>
+                <span class="logo-text">NSRT</span>
+            </div>
+
+            <h1 data-lang="en">Tools made <em>by neighbors,</em><br>for neighbors</h1>
+            <h1 data-lang="sr">Alati koje pravimo <em>zajedno,</em><br>za naše komšije</h1>
+
+            <p data-lang="en">Novi Sad Relational Tech — community tools crafted with and for residents of Novi Sad. Small tools that help us connect, care for, and trust each other.</p>
+            <p data-lang="sr">Novi Sad Relational Tech — digitalni alati koje pravimo zajedno sa stanovnicima Novog Sada. Mali alati koji nam pomažu da se povežemo i brinemo jedni o drugima.</p>
+        </div>
+
+        <div class="scroll-hint">
+            <span data-lang="en">Our tools</span>
+            <span data-lang="sr">Naši alati</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 5v14M5 12l7 7 7-7"/>
+            </svg>
+        </div>
+    </section>
+
+    <!-- Tools Section -->
+    <section class="tools" id="tools">
+        <div class="section-header">
+            <h2 data-lang="en">Available Now</h2>
+            <h2 data-lang="sr">Dostupno sada</h2>
+            <p data-lang="en">Free Chrome extensions for your neighborhood</p>
+            <p data-lang="sr">Besplatni Chrome dodaci za vaše komšiluk</p>
+        </div>
+
+        <div class="tools-grid">
+            <!-- Dear Neighbors -->
+            <div class="tool-card">
+                <svg class="tool-icon" viewBox="0 0 56 56" fill="none">
+                    <rect x="4" y="8" width="48" height="40" rx="4" stroke="#5B7C5A" stroke-width="2" fill="#D4DFD3" opacity="0.3"/>
+                    <path d="M12 20h32M12 28h24M12 36h16" stroke="#5B7C5A" stroke-width="2" stroke-linecap="round"/>
+                    <circle cx="44" cy="36" r="6" fill="#5B7C5A"/>
+                    <path d="M42 36l2 2 4-4" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <h3>Dear Neighbors</h3>
+                <div class="tagline" data-lang="en">Neighborhood Dashboard</div>
+                <div class="tagline" data-lang="sr">Komšijski dashboard</div>
+                <p data-lang="en">Turn your new tab into a local news feed. Community links, participation opportunities, and events — all scoped to your neighborhood.</p>
+                <p data-lang="sr">Pretvorite novi tab u lokalne vesti. Linkovi iz zajednice, prilike za učešće i događaji — sve za vaš komšiluk.</p>
+                <a href="https://github.com/Citizen-Infra/dear-neighbors/releases/latest" class="tool-link" target="_blank">
+                    <span data-lang="en">Download</span>
+                    <span data-lang="sr">Preuzmi</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M5 12h14M12 5l7 7-7 7"/>
+                    </svg>
+                </a>
+            </div>
+
+            <!-- My Community -->
+            <div class="tool-card">
+                <svg class="tool-icon" viewBox="0 0 56 56" fill="none">
+                    <circle cx="28" cy="20" r="8" stroke="#C45D3A" stroke-width="2" fill="#C45D3A" opacity="0.2"/>
+                    <circle cx="14" cy="36" r="6" stroke="#C45D3A" stroke-width="2" fill="#C45D3A" opacity="0.2"/>
+                    <circle cx="42" cy="36" r="6" stroke="#C45D3A" stroke-width="2" fill="#C45D3A" opacity="0.2"/>
+                    <path d="M22 24l-6 8M34 24l6 8M20 36h16" stroke="#C45D3A" stroke-width="2" stroke-linecap="round" opacity="0.5"/>
+                </svg>
+                <h3>My Community</h3>
+                <div class="tagline" data-lang="en">Community + Bluesky Feed</div>
+                <div class="tagline" data-lang="sr">Zajednica + Bluesky</div>
+                <p data-lang="en">Your communities in one place. Curated digests, Bluesky network posts, and upcoming sessions — all in your new tab.</p>
+                <p data-lang="sr">Vaše zajednice na jednom mestu. Pregled linkova, Bluesky postovi i predstojeći događaji — sve u novom tabu.</p>
+                <a href="https://github.com/Citizen-Infra/my-community/releases/latest" class="tool-link" target="_blank">
+                    <span data-lang="en">Download</span>
+                    <span data-lang="sr">Preuzmi</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M5 12h14M12 5l7 7-7 7"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <h3 data-lang="en">Built with neighbors, for neighbors</h3>
+            <h3 data-lang="sr">Pravimo zajedno, za komšije</h3>
+
+            <p data-lang="en">NSRT is part of Citizen Infrastructure — a community forging digital tools that teach collective action through use.</p>
+            <p data-lang="sr">NSRT je deo Citizen Infrastructure — zajednice koja pravi digitalne alate koji nas uče zajedničkom delovanju.</p>
+
+            <a href="https://github.com/Citizen-Infra" class="footer-link" target="_blank">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+                </svg>
+                Citizen-Infra
+            </a>
+
+            <div class="footer-divider"></div>
+
+            <p class="footer-tagline" data-lang="en">"Tools that teach collective action through use"</p>
+            <p class="footer-tagline" data-lang="sr">„Alati koji nas uče zajedničkom delovanju"</p>
+        </div>
+    </footer>
+
+    <script>
+        function setLang(lang) {
+            document.body.classList.toggle('sr', lang === 'sr');
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.textContent === lang.toUpperCase());
+            });
+            document.documentElement.lang = lang;
+            localStorage.setItem('nsrt-lang', lang);
+        }
+
+        // Check saved preference or browser language
+        const savedLang = localStorage.getItem('nsrt-lang');
+        const browserLang = navigator.language.startsWith('sr') ? 'sr' : 'en';
+        setLang(savedLang || browserLang);
+    </script>
+</body>
+</html>
