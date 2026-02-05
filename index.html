@@ -5,6 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NSRT — Novi Sad Relational Tech</title>
     <meta name="description" content="Community tools crafted by, with, and for Novi Sad residents. Alati koje pravimo zajedno, za naše komšije.">
+
+    <!-- Open Graph / Facebook / LinkedIn / Messengers -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://nsrt.netlify.app/">
+    <meta property="og:title" content="NSRT — Novi Sad Relational Tech">
+    <meta property="og:description" content="Community tools crafted by, with, and for Novi Sad residents. We can build what we need.">
+    <meta property="og:image" content="https://nsrt.netlify.app/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="NSRT — Novi Sad Relational Tech">
+    <meta name="twitter:description" content="Community tools crafted by, with, and for Novi Sad residents. We can build what we need.">
+    <meta name="twitter:image" content="https://nsrt.netlify.app/og-image.png">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
@@ -93,10 +109,14 @@
             color: white;
         }
 
-        /* Content visibility */
-        [data-lang="sr"] { display: none; }
-        body.sr [data-lang="en"] { display: none; }
-        body.sr [data-lang="sr"] { display: block; }
+        /* Content visibility - default: EN visible, SR hidden */
+        [data-lang="sr"] { display: none !important; }
+
+        /* SR mode: EN hidden, SR visible */
+        body.sr [data-lang="en"] { display: none !important; }
+        body.sr [data-lang="sr"] { display: block !important; }
+        body.sr span[data-lang="sr"] { display: inline !important; }
+        body.sr .principles li[data-lang="sr"] { display: flex !important; }
 
         /* Header bar */
         .header {
@@ -724,8 +744,11 @@
     <!-- Footer -->
     <footer>
         <div class="footer-inner">
-            <p class="footer-quote">
+            <p class="footer-quote" data-lang="en">
                 "If you want to teach people a new way of thinking, don't bother trying to teach them. Instead, give them a tool, the use of which will lead to new ways of thinking."
+            </p>
+            <p class="footer-quote" data-lang="sr">
+                „Ako želite da naučite ljude novom načinu razmišljanja, nemojte se truditi da ih podučavate. Umesto toga, dajte im alat čija će ih upotreba navesti na nove načine razmišljanja."
             </p>
             <p class="footer-author">— Buckminster Fuller</p>
 

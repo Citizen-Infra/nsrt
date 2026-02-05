@@ -1,0 +1,24 @@
+{
+  "name": "nsrt",
+  "version": "1.0.0",
+  "description": "Tools crafted by, with, and for Novi Sad residents — made to help us connect, care for, and trust each other.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Citizen-Infra/nsrt.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Citizen-Infra/nsrt/issues"
+  },
+  "homepage": "https://github.com/Citizen-Infra/nsrt#readme",
+  "devDependencies": {
+    "puppeteer": "^24.37.0"
+  }
+}
