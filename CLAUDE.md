@@ -11,6 +11,9 @@ Novi Sad Relational Tech (NSRT) — community tools crafted by, with, and for No
 ## Commands
 
 ```bash
+# Deploy to Netlify (after pushing to GitHub)
+npx netlify deploy --prod
+
 # Generate OG image (requires Node.js and Puppeteer)
 npm install
 node generate-og-image.js
