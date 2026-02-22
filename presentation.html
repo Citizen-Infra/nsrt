@@ -1,0 +1,976 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NSRT — Первая встреча</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+    <style>
+        /* ============================================
+           NSRT DESIGN SYSTEM
+           ============================================ */
+        :root {
+            --navy: #1a2332;
+            --navy-light: #2a3a52;
+            --amber: #E8A838;
+            --amber-dark: #C48A20;
+            --cream: #F5F2EB;
+            --cream-dark: #E8E4DB;
+            --steel: #4A6FA5;
+            --steel-light: #6B8FC5;
+            --grid: #D4D0C8;
+            --text: #2C3E50;
+            --text-light: #5D6D7E;
+
+            --font-display: 'Libre Baskerville', Georgia, serif;
+            --font-mono: 'JetBrains Mono', monospace;
+            --font-body: 'Source Serif 4', Georgia, serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            font-family: var(--font-body);
+            background: var(--cream);
+            color: var(--text);
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Blueprint grid background */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image:
+                linear-gradient(var(--grid) 1px, transparent 1px),
+                linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+            background-size: 40px 40px;
+            opacity: 0.4;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* ============================================
+           PROGRESS BAR
+           ============================================ */
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 4px;
+            background: var(--amber);
+            z-index: 1000;
+            transition: width 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            box-shadow: 0 0 12px rgba(232, 168, 56, 0.4);
+        }
+
+        /* ============================================
+           SLIDE COUNTER
+           ============================================ */
+        .slide-counter {
+            position: fixed;
+            bottom: 28px;
+            right: 36px;
+            font-family: var(--font-mono);
+            font-size: 14px;
+            color: var(--text-light);
+            z-index: 1000;
+            letter-spacing: 0.5px;
+            opacity: 0.7;
+            transition: opacity 0.3s;
+            user-select: none;
+        }
+
+        .slide-counter:hover {
+            opacity: 1;
+        }
+
+        .slide-counter .current {
+            color: var(--navy);
+            font-weight: 600;
+        }
+
+        .slide-counter .separator {
+            color: var(--grid);
+            margin: 0 4px;
+        }
+
+        /* ============================================
+           NAV HINTS (bottom-left, subtle)
+           ============================================ */
+        .nav-hints {
+            position: fixed;
+            bottom: 28px;
+            left: 36px;
+            font-family: var(--font-mono);
+            font-size: 11px;
+            color: var(--text-light);
+            opacity: 0;
+            z-index: 1000;
+            transition: opacity 0.6s;
+            user-select: none;
+            letter-spacing: 0.3px;
+        }
+
+        .nav-hints.visible {
+            opacity: 0.5;
+        }
+
+        .nav-hints kbd {
+            display: inline-block;
+            padding: 2px 7px;
+            border: 1px solid var(--grid);
+            border-radius: 3px;
+            background: white;
+            font-family: var(--font-mono);
+            font-size: 10px;
+            margin: 0 2px;
+        }
+
+        /* ============================================
+           SLIDE CONTAINER
+           ============================================ */
+        .slides {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+        }
+
+        .slide {
+            position: absolute;
+            inset: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                        visibility 0s 0.5s;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .slide.active {
+            opacity: 1;
+            visibility: visible;
+            transition: opacity 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                        visibility 0s;
+            z-index: 2;
+        }
+
+        /* Staggered entrance for slide children */
+        .slide.active .stagger-1 { animation: slideUp 0.6s 0.1s both cubic-bezier(0.22, 1, 0.36, 1); }
+        .slide.active .stagger-2 { animation: slideUp 0.6s 0.2s both cubic-bezier(0.22, 1, 0.36, 1); }
+        .slide.active .stagger-3 { animation: slideUp 0.6s 0.3s both cubic-bezier(0.22, 1, 0.36, 1); }
+        .slide.active .stagger-4 { animation: slideUp 0.6s 0.4s both cubic-bezier(0.22, 1, 0.36, 1); }
+        .slide.active .stagger-5 { animation: slideUp 0.6s 0.5s both cubic-bezier(0.22, 1, 0.36, 1); }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(24px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0, 1);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1, 1);
+            }
+        }
+
+        /* ============================================
+           SLIDE TYPE: TITLE
+           ============================================ */
+        .slide--title {
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 60px;
+            background: var(--cream);
+        }
+
+        .slide--title .overline {
+            font-family: var(--font-mono);
+            font-size: clamp(0.75rem, 1.2vw, 0.95rem);
+            font-weight: 500;
+            color: var(--steel);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 40px;
+        }
+
+        .slide--title h1 {
+            font-family: var(--font-display);
+            font-size: clamp(3rem, 6vw, 5rem);
+            font-weight: 400;
+            color: var(--navy);
+            line-height: 1.15;
+            margin-bottom: 32px;
+        }
+
+        .slide--title .divider {
+            width: 60px;
+            height: 4px;
+            background: var(--amber);
+            margin: 0 auto 32px;
+            border-radius: 2px;
+        }
+
+        .slide--title .subtitle {
+            font-family: var(--font-body);
+            font-size: clamp(1.3rem, 2vw, 1.6rem);
+            color: var(--text-light);
+            margin-bottom: 20px;
+        }
+
+        .slide--title .meta {
+            font-family: var(--font-mono);
+            font-size: clamp(0.7rem, 1vw, 0.85rem);
+            color: var(--steel-light);
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .slide--title .meta::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: var(--amber);
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        /* Logo mark on title slide */
+        .slide--title .logo-mark {
+            width: 56px;
+            height: 56px;
+            background: var(--navy);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-mono);
+            font-weight: 600;
+            font-size: 20px;
+            color: var(--amber);
+            border-radius: 6px;
+            margin: 0 auto 32px;
+            box-shadow: 0 4px 20px rgba(26, 35, 50, 0.15);
+        }
+
+        /* ============================================
+           SLIDE TYPE: SECTION (act dividers)
+           ============================================ */
+        .slide--section {
+            justify-content: center;
+            align-items: center;
+            background: var(--navy);
+            text-align: center;
+            padding: 60px;
+        }
+
+        /* Override grid for dark slides */
+        .slide--section::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+            background-size: 40px 40px;
+            pointer-events: none;
+        }
+
+        .slide--section .section-badge {
+            display: inline-block;
+            font-family: var(--font-mono);
+            font-size: clamp(0.85rem, 1.2vw, 1rem);
+            font-weight: 500;
+            color: var(--amber);
+            background: rgba(232, 168, 56, 0.12);
+            padding: 10px 24px;
+            border-radius: 4px;
+            letter-spacing: 2px;
+            margin-bottom: 40px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .slide--section .section-number {
+            font-family: var(--font-mono);
+            font-size: clamp(5rem, 10vw, 9rem);
+            font-weight: 600;
+            color: rgba(232, 168, 56, 0.08);
+            position: absolute;
+            line-height: 1;
+            z-index: 0;
+            user-select: none;
+        }
+
+        .slide--section h2 {
+            font-family: var(--font-display);
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 400;
+            color: white;
+            line-height: 1.2;
+            position: relative;
+            z-index: 1;
+        }
+
+        .slide--section .section-subtitle {
+            font-family: var(--font-body);
+            font-size: clamp(1.1rem, 1.5vw, 1.3rem);
+            color: rgba(255, 255, 255, 0.5);
+            margin-top: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ============================================
+           SLIDE TYPE: CONTENT
+           ============================================ */
+        .slide--content {
+            background: var(--cream);
+        }
+
+        .slide--content .slide-header {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding: 40px 60px 0;
+            margin-bottom: 0;
+        }
+
+        .slide--content .slide-header .section-ref {
+            font-family: var(--font-mono);
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--amber);
+            background: var(--navy);
+            padding: 6px 14px;
+            border-radius: 4px;
+            flex-shrink: 0;
+            letter-spacing: 0.5px;
+        }
+
+        .slide--content .slide-header h2 {
+            font-family: var(--font-display);
+            font-size: clamp(1.6rem, 2.5vw, 2.2rem);
+            font-weight: 400;
+            color: var(--navy);
+        }
+
+        .slide--content .slide-header-line {
+            height: 2px;
+            background: var(--navy);
+            margin: 16px 60px 0;
+        }
+
+        .slide--content .slide-body {
+            flex: 1;
+            padding: 40px 60px 60px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        /* Two-column layout inside content slides */
+        .slide--content .two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            align-items: start;
+        }
+
+        .slide--content .body-text {
+            font-size: clamp(1.2rem, 1.6vw, 1.4rem);
+            color: var(--text);
+            line-height: 1.8;
+            max-width: 800px;
+        }
+
+        /* ============================================
+           SLIDE TYPE: QUOTE
+           ============================================ */
+        .slide--quote {
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 80px;
+            background: var(--navy-light);
+        }
+
+        .slide--quote::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
+            pointer-events: none;
+        }
+
+        .slide--quote .quote-mark {
+            font-family: var(--font-display);
+            font-size: 6rem;
+            color: var(--amber);
+            line-height: 0.5;
+            margin-bottom: 24px;
+            opacity: 0.6;
+            position: relative;
+            z-index: 1;
+        }
+
+        .slide--quote blockquote {
+            font-family: var(--font-display);
+            font-style: italic;
+            font-size: clamp(1.5rem, 2.5vw, 2rem);
+            color: rgba(255, 255, 255, 0.92);
+            line-height: 1.6;
+            max-width: 750px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .slide--quote .attribution {
+            font-family: var(--font-mono);
+            font-size: clamp(0.8rem, 1vw, 0.95rem);
+            color: var(--amber);
+            margin-top: 32px;
+            letter-spacing: 0.5px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ============================================
+           SLIDE TYPE: BREAK
+           ============================================ */
+        .slide--break {
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 60px;
+            background: var(--cream);
+        }
+
+        .slide--break h2 {
+            font-family: var(--font-display);
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 400;
+            color: var(--navy);
+            line-height: 1.3;
+        }
+
+        .slide--break .break-icon {
+            font-size: 3rem;
+            margin-bottom: 24px;
+        }
+
+        .slide--break .break-subtitle {
+            font-family: var(--font-mono);
+            font-size: clamp(0.85rem, 1.1vw, 1rem);
+            color: var(--text-light);
+            margin-top: 16px;
+        }
+
+        /* ============================================
+           COMPONENTS: Content List
+           ============================================ */
+        .content-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .content-list li {
+            padding: 14px 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+            display: flex;
+            gap: 16px;
+            align-items: baseline;
+            font-size: clamp(1.15rem, 1.5vw, 1.35rem);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        .content-list li:last-child {
+            border-bottom: none;
+        }
+
+        .content-list li::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: var(--amber);
+            border-radius: 50%;
+            flex-shrink: 0;
+            margin-top: 10px;
+        }
+
+        .content-list li strong {
+            color: var(--navy);
+            font-weight: 600;
+        }
+
+        /* ============================================
+           COMPONENTS: Stat Cards
+           ============================================ */
+        .stats-row {
+            display: flex;
+            gap: 32px;
+            flex-wrap: wrap;
+        }
+
+        .stat-card {
+            background: white;
+            border: 2px solid var(--navy);
+            padding: 28px 32px;
+            min-width: 180px;
+            flex: 1;
+            position: relative;
+            transition: transform 0.2s;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            height: 5px;
+            background: var(--amber);
+        }
+
+        .stat-card .stat-value {
+            font-family: var(--font-display);
+            font-size: clamp(2rem, 3.5vw, 3rem);
+            font-weight: 700;
+            color: var(--navy);
+            line-height: 1.1;
+            margin-bottom: 8px;
+        }
+
+        .stat-card .stat-label {
+            font-family: var(--font-mono);
+            font-size: clamp(0.7rem, 0.9vw, 0.85rem);
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* ============================================
+           COMPONENTS: Highlight Box
+           ============================================ */
+        .highlight-box {
+            background: white;
+            border-left: 5px solid var(--amber);
+            padding: 28px 32px;
+            margin: 20px 0;
+            box-shadow: 0 2px 12px rgba(26, 35, 50, 0.06);
+        }
+
+        .highlight-box p {
+            font-size: clamp(1.1rem, 1.4vw, 1.3rem);
+            color: var(--text);
+            line-height: 1.7;
+        }
+
+        .highlight-box .highlight-label {
+            font-family: var(--font-mono);
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--amber-dark);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 10px;
+        }
+
+        /* ============================================
+           COMPONENTS: Idea Grid / Cards
+           ============================================ */
+        .idea-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 24px;
+        }
+
+        .idea-card {
+            padding: 28px;
+            background: var(--cream-dark);
+            border-left: 4px solid var(--steel);
+        }
+
+        .idea-card h4 {
+            font-family: var(--font-display);
+            font-size: clamp(1.1rem, 1.3vw, 1.25rem);
+            color: var(--navy);
+            margin-bottom: 12px;
+        }
+
+        .idea-card p {
+            font-size: clamp(0.95rem, 1.1vw, 1.05rem);
+            color: var(--text-light);
+            line-height: 1.6;
+        }
+
+        /* ============================================
+           COMPONENTS: Principle Items
+           ============================================ */
+        .principle-item {
+            padding: 18px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            display: flex;
+            gap: 18px;
+            align-items: baseline;
+            font-size: clamp(1.15rem, 1.5vw, 1.35rem);
+            line-height: 1.6;
+        }
+
+        .principle-item:last-child {
+            border-bottom: none;
+        }
+
+        .principle-item .arrow {
+            color: var(--amber);
+            font-family: var(--font-mono);
+            font-size: 1.2em;
+            flex-shrink: 0;
+        }
+
+        .principle-item strong {
+            color: white;
+            font-weight: 600;
+        }
+
+        .principle-item span {
+            color: rgba(255, 255, 255, 0.75);
+        }
+
+        /* Dark slide variant for principle items */
+        .slide--dark .principle-item {
+            border-color: rgba(255, 255, 255, 0.08);
+        }
+
+        /* ============================================
+           UTILITY: Dark slides (navy bg)
+           ============================================ */
+        .slide--dark {
+            background: var(--navy);
+        }
+
+        .slide--dark::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+            background-size: 40px 40px;
+            pointer-events: none;
+        }
+
+        .slide--dark .slide-header .section-ref {
+            background: rgba(232, 168, 56, 0.15);
+            color: var(--amber);
+        }
+
+        .slide--dark .slide-header h2 {
+            color: white;
+        }
+
+        .slide--dark .slide-header-line {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .slide--dark .body-text {
+            color: rgba(255, 255, 255, 0.85);
+        }
+
+        .slide--dark .content-list li {
+            color: rgba(255, 255, 255, 0.85);
+            border-color: rgba(255, 255, 255, 0.08);
+        }
+
+        .slide--dark .content-list li strong {
+            color: white;
+        }
+
+        .slide--dark .highlight-box {
+            background: rgba(255, 255, 255, 0.05);
+            box-shadow: none;
+        }
+
+        .slide--dark .highlight-box p {
+            color: rgba(255, 255, 255, 0.85);
+        }
+
+        .slide--dark .stat-card {
+            background: var(--navy-light);
+            border-color: rgba(255, 255, 255, 0.15);
+        }
+
+        .slide--dark .stat-card::before {
+            display: none;
+        }
+
+        .slide--dark .stat-card .stat-value {
+            color: var(--amber);
+        }
+
+        .slide--dark .stat-card .stat-label {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .slide--dark .idea-card {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .slide--dark .idea-card h4 {
+            color: white;
+        }
+
+        .slide--dark .idea-card p {
+            color: rgba(255, 255, 255, 0.65);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Progress bar -->
+    <div class="progress-bar" id="progress"></div>
+
+    <!-- Slide counter -->
+    <div class="slide-counter" id="counter">
+        <span class="current">01</span><span class="separator">/</span><span class="total">03</span>
+    </div>
+
+    <!-- Navigation hints (shown briefly on first slide) -->
+    <div class="nav-hints" id="navHints">
+        <kbd>&larr;</kbd> <kbd>&rarr;</kbd> navigate
+    </div>
+
+    <!-- ==========================================
+         SLIDES
+         ========================================== -->
+    <div class="slides" id="slides">
+
+        <!-- SLIDE 1: Title -->
+        <div class="slide slide--title active" data-slide="0">
+            <div class="logo-mark stagger-1">NS</div>
+            <div class="overline stagger-2">NSRT &mdash; Novi Sad Relational Technology</div>
+            <h1 class="stagger-3">Первая встреча</h1>
+            <div class="divider stagger-4" style="animation: scaleIn 0.6s 0.35s both cubic-bezier(0.22, 1, 0.36, 1); transform-origin: center;"></div>
+            <div class="subtitle stagger-4">22 февраля 2026</div>
+            <div class="meta stagger-5">45.2671&deg; N, 19.8335&deg; E &mdash; Нови-Сад, Сербия</div>
+        </div>
+
+        <!-- SLIDE 2: Section divider — Act 1 -->
+        <div class="slide slide--section" data-slide="1">
+            <div class="section-number stagger-1">01</div>
+            <div class="section-badge stagger-2">ACT 01</div>
+            <h2 class="stagger-3">Зачем?</h2>
+            <div class="section-subtitle stagger-4">Почему мы здесь и что нас объединяет</div>
+        </div>
+
+        <!-- SLIDE 3: Placeholder content slide -->
+        <div class="slide slide--content" data-slide="2">
+            <div class="slide-header">
+                <span class="section-ref stagger-1">01</span>
+                <h2 class="stagger-2">Что такое NSRT</h2>
+            </div>
+            <div class="slide-header-line stagger-2"></div>
+            <div class="slide-body">
+                <div class="body-text stagger-3" style="margin-bottom: 32px;">
+                    Сообщество жителей Нови-Сада, которые создают технологии для соседства. Маленькие инструменты, чтобы лучше знать друг друга, помогать и доверять.
+                </div>
+                <div class="stats-row stagger-4">
+                    <div class="stat-card">
+                        <div class="stat-value">111</div>
+                        <div class="stat-label">стран</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">340+</div>
+                        <div class="stat-label">городов</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">1</div>
+                        <div class="stat-label">сообщество</div>
+                    </div>
+                </div>
+                <div class="highlight-box stagger-5" style="margin-top: 32px;">
+                    <div class="highlight-label">Принцип</div>
+                    <p>Никто не придёт спасать наши дворы. Но мы можем сделать всё сами.</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        /* ============================================
+           SLIDE ENGINE
+           ============================================ */
+        (function() {
+            const slides = document.querySelectorAll('.slide');
+            const progress = document.getElementById('progress');
+            const counter = document.getElementById('counter');
+            const navHints = document.getElementById('navHints');
+            const total = slides.length;
+            let current = 0;
+            let transitioning = false;
+
+            // Format number with leading zero
+            function pad(n) {
+                return String(n).padStart(2, '0');
+            }
+
+            // Update UI elements
+            function updateUI() {
+                // Progress bar
+                const pct = total > 1 ? ((current + 1) / total) * 100 : 100;
+                progress.style.width = pct + '%';
+
+                // Counter
+                counter.querySelector('.current').textContent = pad(current + 1);
+                counter.querySelector('.total').textContent = pad(total);
+            }
+
+            // Navigate to slide
+            function goTo(index) {
+                if (transitioning) return;
+                if (index < 0 || index >= total) return;
+                if (index === current) return;
+
+                transitioning = true;
+
+                // Remove active from current
+                slides[current].classList.remove('active');
+
+                // Add active to target
+                slides[index].classList.add('active');
+
+                current = index;
+                updateUI();
+
+                // Hide nav hints after first navigation
+                navHints.classList.remove('visible');
+
+                // Allow next transition after animation completes
+                setTimeout(function() {
+                    transitioning = false;
+                }, 550);
+            }
+
+            function next() { goTo(current + 1); }
+            function prev() { goTo(current - 1); }
+
+            // Keyboard navigation
+            document.addEventListener('keydown', function(e) {
+                switch(e.key) {
+                    case 'ArrowRight':
+                    case 'ArrowDown':
+                    case ' ':
+                    case 'PageDown':
+                        e.preventDefault();
+                        next();
+                        break;
+                    case 'ArrowLeft':
+                    case 'ArrowUp':
+                    case 'PageUp':
+                        e.preventDefault();
+                        prev();
+                        break;
+                    case 'Home':
+                        e.preventDefault();
+                        goTo(0);
+                        break;
+                    case 'End':
+                        e.preventDefault();
+                        goTo(total - 1);
+                        break;
+                }
+            });
+
+            // Touch/swipe support
+            let touchStartX = 0;
+            let touchStartY = 0;
+            let touchStartTime = 0;
+
+            document.addEventListener('touchstart', function(e) {
+                touchStartX = e.changedTouches[0].clientX;
+                touchStartY = e.changedTouches[0].clientY;
+                touchStartTime = Date.now();
+            }, { passive: true });
+
+            document.addEventListener('touchend', function(e) {
+                const dx = e.changedTouches[0].clientX - touchStartX;
+                const dy = e.changedTouches[0].clientY - touchStartY;
+                const dt = Date.now() - touchStartTime;
+
+                // Must be fast enough, long enough, and more horizontal than vertical
+                if (dt < 500 && Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.5) {
+                    if (dx < 0) {
+                        next();
+                    } else {
+                        prev();
+                    }
+                }
+            }, { passive: true });
+
+            // Click navigation (left 30% = prev, right 30% = next)
+            document.addEventListener('click', function(e) {
+                // Don't navigate if clicking on interactive elements
+                if (e.target.closest('a, button, input, textarea')) return;
+
+                const x = e.clientX / window.innerWidth;
+                if (x < 0.3) {
+                    prev();
+                } else if (x > 0.7) {
+                    next();
+                }
+            });
+
+            // Initialize
+            updateUI();
+
+            // Show nav hints briefly on first slide
+            setTimeout(function() {
+                navHints.classList.add('visible');
+            }, 1500);
+            setTimeout(function() {
+                navHints.classList.remove('visible');
+            }, 6000);
+
+        })();
+    </script>
+</body>
+</html>
