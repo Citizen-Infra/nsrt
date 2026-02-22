@@ -912,6 +912,48 @@
             margin-top: 8px;
             letter-spacing: 0.5px;
         }
+
+        /* ============================================
+           SLIDE VARIANT: Centered body
+           ============================================ */
+        .slide-body--centered {
+            align-items: center;
+            text-align: center;
+        }
+
+        .slide-body--centered .body-text {
+            text-align: center;
+        }
+
+        /* ============================================
+           COMPONENTS: QR Placeholder
+           ============================================ */
+        .qr-placeholder {
+            width: 300px;
+            height: 300px;
+            border: 3px dashed var(--navy-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-mono);
+            font-size: clamp(1.2rem, 1.6vw, 1.5rem);
+            font-weight: 600;
+            color: var(--navy-light);
+            letter-spacing: 2px;
+            background: white;
+            margin: 0 auto;
+        }
+
+        .qr-url {
+            font-family: var(--font-mono);
+            font-size: clamp(1.1rem, 1.5vw, 1.35rem);
+            color: var(--navy);
+            background: var(--cream-dark);
+            padding: 10px 24px;
+            border-radius: 4px;
+            display: inline-block;
+            letter-spacing: 0.5px;
+        }
     </style>
 </head>
 <body>
@@ -921,7 +963,7 @@
 
     <!-- Slide counter -->
     <div class="slide-counter" id="counter">
-        <span class="current">01</span><span class="separator">/</span><span class="total">09</span>
+        <span class="current">01</span><span class="separator">/</span><span class="total">12</span>
     </div>
 
     <!-- Navigation hints (shown briefly on first slide) -->
@@ -1140,6 +1182,56 @@
                     </div>
                 </div>
                 <div class="slide-footnote stagger-4" style="margin-top: 24px;">Это отправные точки, не дорожная карта. Ваши идеи &mdash; главное.</div>
+            </div>
+        </div>
+
+        <!-- SLIDE 10: Section divider — Act 2 -->
+        <div class="slide slide--section" data-slide="9">
+            <div class="section-number stagger-1">02</div>
+            <div class="section-badge stagger-2">ACT 02</div>
+            <h2 class="stagger-3">Что нужно именно вам?</h2>
+            <div class="section-subtitle stagger-4">Структурированное обсуждение</div>
+        </div>
+
+        <!-- SLIDE 11: Harmonica transition -->
+        <div class="slide slide--content" data-slide="10">
+            <div class="slide-header">
+                <span class="section-ref stagger-1">02 &mdash; ЧТО</span>
+                <h2 class="stagger-2">Давайте разберёмся вместе</h2>
+            </div>
+            <div class="slide-header-line stagger-2"></div>
+            <div class="slide-body">
+                <div class="body-text stagger-3" style="margin-bottom: 12px;">
+                    Хватит обо мне. Теперь ваш черёд.
+                </div>
+                <div class="body-text stagger-3" style="margin-bottom: 24px;">
+                    Я сделал инструмент именно для таких разговоров &mdash; Harmonica.
+                </div>
+                <div class="highlight-box stagger-4" style="margin-bottom: 24px;">
+                    <p>Каждый отвечает на вопрос со своего телефона. ИИ собирает все ответы в общий синтез. Вы увидите, что думает группа &mdash; не только самые громкие.</p>
+                </div>
+                <div class="body-text stagger-5">
+                    Это займёт 15&ndash;20 минут.
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 12: QR code / Join -->
+        <div class="slide slide--content" data-slide="11">
+            <div class="slide-header">
+                <span class="section-ref stagger-1">02 &mdash; ЧТО</span>
+                <h2 class="stagger-2">Присоединяйтесь</h2>
+            </div>
+            <div class="slide-header-line stagger-2"></div>
+            <div class="slide-body slide-body--centered">
+                <div class="qr-placeholder stagger-3">QR-КОД</div>
+                <div class="body-text stagger-4" style="margin-top: 28px; color: var(--text-light);">
+                    Откройте камеру телефона и наведите на код
+                </div>
+                <div class="stagger-4" style="margin-top: 20px;">
+                    <span class="qr-url">harmonica.chat/s/...</span>
+                </div>
+                <div class="slide-footnote stagger-5" style="margin-top: 28px;">Анонимно. Без регистрации.</div>
             </div>
         </div>
 
