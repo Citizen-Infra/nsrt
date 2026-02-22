@@ -1034,6 +1034,189 @@
         .slide--dark .slide-footnote {
             color: rgba(255, 255, 255, 0.55);
         }
+
+        /* ============================================
+           COMPONENTS: Command Block (terminal-style)
+           ============================================ */
+        .command-block {
+            background: var(--navy);
+            color: var(--amber);
+            font-family: var(--font-mono);
+            font-size: clamp(1.3rem, 2vw, 1.8rem);
+            font-weight: 500;
+            padding: 24px 32px;
+            border-radius: 4px;
+            border-left: 5px solid var(--amber);
+            box-shadow: 0 4px 20px rgba(26, 35, 50, 0.15);
+            word-break: break-all;
+            line-height: 1.5;
+            position: relative;
+        }
+
+        .command-block::before {
+            content: '$';
+            color: var(--steel-light);
+            margin-right: 12px;
+            font-weight: 600;
+        }
+
+        .command-block--no-prompt::before {
+            content: none;
+        }
+
+        .command-block--small {
+            font-size: clamp(1rem, 1.5vw, 1.3rem);
+            padding: 16px 24px;
+        }
+
+        /* ============================================
+           COMPONENTS: Platform Split (Mac vs Windows)
+           ============================================ */
+        .platform-split {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        .platform-card {
+            background: white;
+            border: 2px solid var(--navy);
+            padding: 24px 28px;
+            position: relative;
+        }
+
+        .platform-card::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            height: 4px;
+            background: var(--steel);
+        }
+
+        .platform-card .platform-label {
+            font-family: var(--font-mono);
+            font-size: clamp(0.85rem, 1vw, 0.95rem);
+            font-weight: 600;
+            color: var(--steel);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .platform-card .platform-label .platform-icon {
+            font-style: normal;
+            font-size: 1.1em;
+        }
+
+        .platform-card .command-block {
+            font-size: clamp(1rem, 1.5vw, 1.3rem);
+            padding: 16px 20px;
+            margin-bottom: 10px;
+        }
+
+        .platform-card .platform-note {
+            font-family: var(--font-body);
+            font-size: clamp(0.9rem, 1.1vw, 1rem);
+            color: var(--text-light);
+            line-height: 1.5;
+            margin-top: 8px;
+        }
+
+        /* ============================================
+           COMPONENTS: Setup Note (small helper text)
+           ============================================ */
+        .setup-note {
+            font-family: var(--font-body);
+            font-size: clamp(1rem, 1.3vw, 1.15rem);
+            color: var(--text-light);
+            line-height: 1.6;
+            margin-top: 12px;
+        }
+
+        .setup-note strong {
+            color: var(--navy);
+        }
+
+        /* ============================================
+           COMPONENTS: Setup Steps List (numbered)
+           ============================================ */
+        .setup-steps {
+            list-style: none;
+            padding: 0;
+            counter-reset: setup-step;
+        }
+
+        .setup-steps li {
+            padding: 10px 0;
+            display: flex;
+            gap: 14px;
+            align-items: baseline;
+            font-size: clamp(1.1rem, 1.4vw, 1.25rem);
+            color: var(--text);
+            line-height: 1.6;
+            counter-increment: setup-step;
+        }
+
+        .setup-steps li::before {
+            content: counter(setup-step) '.';
+            font-family: var(--font-mono);
+            font-weight: 600;
+            color: var(--amber-dark);
+            flex-shrink: 0;
+            min-width: 24px;
+        }
+
+        /* ============================================
+           COMPONENTS: MCP Item Cards
+           ============================================ */
+        .mcp-item {
+            background: white;
+            border: 2px solid var(--navy);
+            padding: 20px 24px;
+            position: relative;
+            margin-bottom: 16px;
+        }
+
+        .mcp-item::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            height: 4px;
+            background: var(--amber);
+        }
+
+        .mcp-item .mcp-header {
+            display: flex;
+            align-items: baseline;
+            gap: 12px;
+            margin-bottom: 8px;
+        }
+
+        .mcp-item .mcp-name {
+            font-family: var(--font-mono);
+            font-size: clamp(1.1rem, 1.3vw, 1.25rem);
+            font-weight: 600;
+            color: var(--navy);
+        }
+
+        .mcp-item .mcp-desc {
+            font-family: var(--font-body);
+            font-size: clamp(0.95rem, 1.1vw, 1.05rem);
+            color: var(--text-light);
+        }
+
+        .mcp-item .command-block {
+            font-size: clamp(0.9rem, 1.2vw, 1.1rem);
+            padding: 14px 18px;
+            margin-top: 10px;
+        }
     </style>
 </head>
 <body>
@@ -1363,15 +1546,150 @@
             </div>
         </div>
 
-        <!-- SLIDE 16: Closing quote -->
-        <div class="slide slide--quote" data-slide="15">
+        <!-- SLIDE 16: Setup Step 1 — Node.js -->
+        <div class="slide slide--content" data-slide="15">
+            <div class="slide-header">
+                <span class="section-ref stagger-1">03 &mdash; УСТАНОВКА</span>
+                <h2 class="stagger-2">Шаг 1: Установить Node.js</h2>
+            </div>
+            <div class="slide-header-line stagger-2"></div>
+            <div class="slide-body">
+                <div class="platform-split stagger-3">
+                    <div class="platform-card">
+                        <div class="platform-label"><i class="platform-icon">&#63743;</i> macOS</div>
+                        <div class="command-block">brew install node</div>
+                        <div class="platform-note">Если нет brew: откройте Terminal и вставьте команду с <strong>brew.sh</strong></div>
+                    </div>
+                    <div class="platform-card">
+                        <div class="platform-label"><i class="platform-icon">&#9638;</i> Windows</div>
+                        <div class="command-block command-block--no-prompt">Скачайте установщик с <strong style="color: white;">nodejs.org</strong></div>
+                        <div class="platform-note">Нажмите Next &rarr; Next &rarr; Install</div>
+                    </div>
+                </div>
+                <div class="slide-footnote stagger-4" style="margin-top: 28px;">Node.js &mdash; среда для запуска JavaScript. Claude Code работает на ней.</div>
+            </div>
+        </div>
+
+        <!-- SLIDE 17: Setup Step 2 — Git & GitHub -->
+        <div class="slide slide--content" data-slide="16">
+            <div class="slide-header">
+                <span class="section-ref stagger-1">03 &mdash; УСТАНОВКА</span>
+                <h2 class="stagger-2">Шаг 2: Git и GitHub</h2>
+            </div>
+            <div class="slide-header-line stagger-2"></div>
+            <div class="slide-body">
+                <div class="body-text stagger-3" style="margin-bottom: 16px; font-weight: 600; color: var(--navy);">Установить Git:</div>
+                <div class="platform-split stagger-3">
+                    <div class="platform-card">
+                        <div class="platform-label"><i class="platform-icon">&#63743;</i> macOS</div>
+                        <div class="command-block">xcode-select --install</div>
+                    </div>
+                    <div class="platform-card">
+                        <div class="platform-label"><i class="platform-icon">&#9638;</i> Windows</div>
+                        <div class="command-block command-block--no-prompt">Скачайте с <strong style="color: white;">git-scm.com</strong></div>
+                        <div class="platform-note">Next &rarr; Next &rarr; Install</div>
+                    </div>
+                </div>
+                <div class="highlight-box stagger-4" style="margin-top: 24px;">
+                    <div class="highlight-label">GitHub</div>
+                    <p>Зайдите на <strong>github.com</strong> и создайте аккаунт. GitHub &mdash; это где хранится код. Бесплатно.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 18: Setup Step 3 — Claude Code -->
+        <div class="slide slide--content" data-slide="17">
+            <div class="slide-header">
+                <span class="section-ref stagger-1">03 &mdash; УСТАНОВКА</span>
+                <h2 class="stagger-2">Шаг 3: Установить Claude Code</h2>
+            </div>
+            <div class="slide-header-line stagger-2"></div>
+            <div class="slide-body slide-body--centered">
+                <div class="command-block stagger-3" style="font-size: clamp(1.4rem, 2.2vw, 2rem); text-align: center; display: inline-block; margin: 0 auto;">npm install -g @anthropic-ai/claude-code</div>
+                <div class="setup-note stagger-4" style="margin-top: 24px; text-align: center;">Одна команда. Работает на Mac, Windows и Linux.</div>
+                <div class="highlight-box stagger-5" style="margin-top: 24px; text-align: left;">
+                    <p><strong>npm</strong> &mdash; менеджер пакетов, он появился вместе с Node.js на шаге 1.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 19: Setup Step 4 — Anthropic Account -->
+        <div class="slide slide--content" data-slide="18">
+            <div class="slide-header">
+                <span class="section-ref stagger-1">03 &mdash; УСТАНОВКА</span>
+                <h2 class="stagger-2">Шаг 4: Аккаунт и подписка</h2>
+            </div>
+            <div class="slide-header-line stagger-2"></div>
+            <div class="slide-body">
+                <ol class="setup-steps stagger-3">
+                    <li>Зайдите на <strong style="color: var(--navy);">claude.ai</strong></li>
+                    <li>Создайте аккаунт (Google или email)</li>
+                    <li>Оформите подписку <strong style="color: var(--navy);">Pro &mdash; $20/мес</strong></li>
+                </ol>
+                <div class="highlight-box stagger-4" style="margin-top: 28px;">
+                    <p>Подписка даёт доступ к Claude Code и лучшим моделям. Можно отменить в любой момент.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 20: Setup Step 5 — First Launch -->
+        <div class="slide slide--content" data-slide="19">
+            <div class="slide-header">
+                <span class="section-ref stagger-1">03 &mdash; УСТАНОВКА</span>
+                <h2 class="stagger-2">Шаг 5: Запуск</h2>
+            </div>
+            <div class="slide-header-line stagger-2"></div>
+            <div class="slide-body">
+                <div class="setup-note stagger-3" style="margin-bottom: 20px; font-size: clamp(1.1rem, 1.4vw, 1.25rem); color: var(--text);">Откройте терминал (Terminal на Mac, PowerShell на Windows)</div>
+                <div class="command-block stagger-3" style="font-size: clamp(1.8rem, 3vw, 2.5rem); text-align: center; display: block; margin: 0 auto 24px; max-width: 300px;">claude</div>
+                <ol class="setup-steps stagger-4">
+                    <li>Браузер откроется для авторизации. Нажмите &laquo;Разрешить&raquo;.</li>
+                    <li>Готово! Вы внутри Claude Code.</li>
+                </ol>
+                <div class="highlight-box stagger-5" style="margin-top: 20px;">
+                    <div class="highlight-label">Совет</div>
+                    <p>Создайте папку для проекта и запустите claude оттуда:</p>
+                    <div class="command-block command-block--small" style="margin-top: 10px;">mkdir my-project && cd my-project && claude</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 21: Setup Step 6 — MCP Servers -->
+        <div class="slide slide--content" data-slide="20">
+            <div class="slide-header">
+                <span class="section-ref stagger-1">03 &mdash; УСТАНОВКА</span>
+                <h2 class="stagger-2">Шаг 6: Суперсилы (MCP)</h2>
+            </div>
+            <div class="slide-header-line stagger-2"></div>
+            <div class="slide-body">
+                <div class="setup-note stagger-3" style="margin-bottom: 20px; font-size: clamp(1.1rem, 1.4vw, 1.25rem); color: var(--text);">MCP-серверы дают Claude Code доступ к внешним инструментам.</div>
+                <div class="mcp-item stagger-3">
+                    <div class="mcp-header">
+                        <span class="mcp-name">Firecrawl</span>
+                        <span class="mcp-desc">&mdash; Поиск и чтение веб-страниц</span>
+                    </div>
+                    <div class="command-block">claude mcp add firecrawl -- npx -y firecrawl-mcp</div>
+                </div>
+                <div class="mcp-item stagger-4">
+                    <div class="mcp-header">
+                        <span class="mcp-name">Context7</span>
+                        <span class="mcp-desc">&mdash; Документация библиотек &mdash; всегда актуальная</span>
+                    </div>
+                    <div class="command-block">claude mcp add context7 -- npx -y @upstash/context7-mcp@latest</div>
+                </div>
+                <div class="slide-footnote stagger-5" style="margin-top: 20px;">Есть сотни MCP-серверов для всего: базы данных, деплой, Telegram, Notion...</div>
+            </div>
+        </div>
+
+        <!-- SLIDE 22: Closing quote -->
+        <div class="slide slide--quote" data-slide="21">
             <div class="quote-mark stagger-1">&ldquo;</div>
             <blockquote class="stagger-2">Если вы хотите научить людей новому образу мышления, не пытайтесь их учить. Вместо этого дайте им инструмент, использование которого приведёт к новым способам мышления.</blockquote>
             <div class="attribution stagger-3">&mdash; Бакминстер Фуллер</div>
         </div>
 
-        <!-- SLIDE 17: Call to action -->
-        <div class="slide slide--content slide--dark" data-slide="16">
+        <!-- SLIDE 23: Call to action -->
+        <div class="slide slide--content slide--dark" data-slide="22">
             <div class="slide-header">
                 <span class="section-ref stagger-1">NSRT</span>
                 <h2 class="stagger-2">Что дальше?</h2>
