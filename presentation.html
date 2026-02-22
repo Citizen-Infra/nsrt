@@ -644,6 +644,73 @@
             line-height: 1.6;
         }
 
+        /* Dense variant: 8 cards in 4x2 grid */
+        .idea-grid--dense {
+            grid-template-columns: repeat(4, 1fr);
+            gap: 14px;
+        }
+
+        .idea-grid--dense .idea-card {
+            padding: 14px 16px;
+            border-left-width: 3px;
+        }
+
+        .idea-grid--dense .idea-card h4 {
+            font-size: clamp(0.9rem, 1.1vw, 1.05rem);
+            margin-bottom: 6px;
+            line-height: 1.3;
+        }
+
+        .idea-grid--dense .idea-card p {
+            font-size: clamp(0.85rem, 1vw, 0.95rem);
+            line-height: 1.45;
+        }
+
+        /* 5-card variant: 3+2 balanced grid */
+        .idea-grid--5 {
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+        }
+
+        .idea-grid--5 .idea-card {
+            padding: 20px 22px;
+        }
+
+        .idea-grid--5 .idea-card h4 {
+            font-size: clamp(1rem, 1.2vw, 1.15rem);
+            margin-bottom: 8px;
+        }
+
+        .idea-grid--5 .idea-card p {
+            font-size: clamp(0.95rem, 1.15vw, 1.05rem);
+            line-height: 1.5;
+        }
+
+        /* Compact highlight boxes for dense slides */
+        .highlight-box--compact {
+            padding: 18px 24px;
+            margin: 0 0 14px 0;
+        }
+
+        .highlight-box--compact:last-child {
+            margin-bottom: 0;
+        }
+
+        .highlight-box--compact .highlight-label {
+            font-size: clamp(0.8rem, 1vw, 0.9rem);
+            margin-bottom: 8px;
+        }
+
+        .highlight-box--compact p {
+            font-size: clamp(1rem, 1.25vw, 1.15rem);
+            line-height: 1.55;
+        }
+
+        /* Dense slide body: tighter padding for slides with many items */
+        .slide-body--dense {
+            padding: 24px 60px 32px;
+        }
+
         /* ============================================
            COMPONENTS: Principle Items
            ============================================ */
@@ -1458,42 +1525,42 @@
                 <h2 class="stagger-2">Это уже работает</h2>
             </div>
             <div class="slide-header-line stagger-2"></div>
-            <div class="slide-body">
-                <div class="idea-grid stagger-3">
-                    <div class="idea-card">
+            <div class="slide-body slide-body--dense">
+                <div class="idea-grid idea-grid--dense">
+                    <div class="idea-card stagger-3">
                         <h4>Repair Cafe</h4>
                         <p>Амстердам &mdash; Бесплатные мастерские, где соседи вместе чинят вещи. С 2009 года &mdash; 2500+ кафе в 40 странах.</p>
                     </div>
-                    <div class="idea-card">
+                    <div class="idea-card stagger-3">
                         <h4>NeighborCircles</h4>
                         <p>Массачусетс &mdash; Ужины на 8&ndash;10 незнакомых соседей. Три встречи &mdash; и чужие становятся своими.</p>
                     </div>
-                    <div class="idea-card">
+                    <div class="idea-card stagger-3">
                         <h4>Flatpack Democracy</h4>
                         <p>Фром, Англия &mdash; Жители собрались в пабе, выдвинули независимых кандидатов и выиграли все места в совете.</p>
                     </div>
-                    <div class="idea-card">
+                    <div class="idea-card stagger-4">
                         <h4>Neighborhood Microgrants</h4>
                         <p>Шарлоттсвилль &mdash; $100 на встречу соседей. 30 хозяев, $3000 &mdash; и десятки новых связей.</p>
                     </div>
-                    <div class="idea-card">
+                    <div class="idea-card stagger-4">
                         <h4>Connective Tissue</h4>
                         <p>$50 микрогранты: &laquo;Собери соседей и вместе представьте, каким может быть ваше место.&raquo;</p>
                     </div>
-                    <div class="idea-card">
+                    <div class="idea-card stagger-4">
                         <h4>Welcoming Newcomers</h4>
                         <p>Комитет встречи новых жителей &mdash; чтобы приехавший не чувствовал себя чужим с первого дня.</p>
                     </div>
-                    <div class="idea-card">
+                    <div class="idea-card stagger-5">
                         <h4>Bushwick Collective</h4>
                         <p>Бруклин &mdash; Уличные художники превратили промзону в галерею под открытым небом. Район ожил.</p>
                     </div>
-                    <div class="idea-card">
+                    <div class="idea-card stagger-5">
                         <h4>Bradley St Bicycle Co-op</h4>
                         <p>Нью-Хейвен &mdash; Кооперативная велосипедная мастерская: соседи чинят велосипеды вместе и учат друг друга.</p>
                     </div>
                 </div>
-                <div class="slide-footnote stagger-4">relationaltechproject.org/remix</div>
+                <div class="slide-footnote stagger-6">relationaltechproject.org/remix</div>
             </div>
         </div>
 
@@ -1505,29 +1572,29 @@
             </div>
             <div class="slide-header-line stagger-2"></div>
             <div class="slide-body">
-                <div class="idea-grid stagger-3">
-                    <div class="idea-card">
+                <div class="idea-grid idea-grid--5">
+                    <div class="idea-card stagger-3">
                         <h4>Local Supplies Sharing</h4>
                         <p>Одалживай и делись вещами для праздников и мероприятий с соседями.</p>
                     </div>
-                    <div class="idea-card">
+                    <div class="idea-card stagger-3">
                         <h4>Community Apps Dashboard</h4>
                         <p>Каталог всех цифровых инструментов, созданных сообществом.</p>
                     </div>
-                    <div class="idea-card">
+                    <div class="idea-card stagger-3">
                         <h4>Block Party Organizing</h4>
                         <p>Планируй и координируй праздники квартала.</p>
                     </div>
-                    <div class="idea-card">
+                    <div class="idea-card stagger-4">
                         <h4>Neighborhood API</h4>
                         <p>Открытый формат для обмена событиями и ресурсами между инструментами.</p>
                     </div>
-                    <div class="idea-card">
+                    <div class="idea-card stagger-4">
                         <h4>Our Neighborhood Today</h4>
                         <p>Общественный календарь для жителей района.</p>
                     </div>
                 </div>
-                <div class="slide-footnote stagger-4">RTP Studio Library &mdash; relationaltechproject.org</div>
+                <div class="slide-footnote stagger-5">RTP Studio Library &mdash; relationaltechproject.org</div>
             </div>
         </div>
 
@@ -1779,19 +1846,19 @@
             </div>
             <div class="slide-header-line stagger-2"></div>
             <div class="slide-body">
-                <div class="highlight-box stagger-3" style="margin-bottom: 20px;">
+                <div class="highlight-box highlight-box--compact stagger-3">
                     <div class="highlight-label">01</div>
                     <p><strong style="color: var(--navy);">Хотим встречаться снова?</strong> Если да &mdash; как часто? Раз в две недели? Раз в месяц?</p>
                 </div>
-                <div class="highlight-box stagger-4" style="margin-bottom: 20px;">
+                <div class="highlight-box highlight-box--compact stagger-4">
                     <div class="highlight-label">02</div>
                     <p><strong style="color: var(--navy);">Какой формат?</strong> Воркшопы, хакатоны, просто посиделки с ноутбуками?</p>
                 </div>
-                <div class="highlight-box stagger-5" style="margin-bottom: 20px;">
+                <div class="highlight-box highlight-box--compact stagger-5">
                     <div class="highlight-label">03</div>
                     <p><strong style="color: var(--navy);">Кто может фасилитировать?</strong> Не обязательно я. Кто хочет вести следующую встречу?</p>
                 </div>
-                <div class="highlight-box stagger-6">
+                <div class="highlight-box highlight-box--compact stagger-6">
                     <div class="highlight-label">04</div>
                     <p><strong style="color: var(--navy);">Где?</strong> Коворкинг, кафе, чья-то квартира?</p>
                 </div>
